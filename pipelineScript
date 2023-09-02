@@ -1,0 +1,26 @@
+pipeline{
+    agent any
+    stages{
+        stage('Building Artifact'){
+        steps{
+        withMaven(maven:'MAVEN_HOME')
+        {
+        sh "mvn clean install package -DskipTests -Dmaven.javadoc.skip=true"
+
+        }
+        }
+        }
+        stage('Code Quality Analysis'){
+            
+        steps{
+        withSonarQubeEnv('SonarServer')
+        {
+        withMaven(maven:'MAVEN_HOME')
+        {
+        sh "mvn sonar:sonar"
+        }    
+        }    
+        }
+        }
+    }
+}
