@@ -7,8 +7,7 @@ pipeline {
                 withMaven(
                     // Provide the name of the Maven tool configuration defined in Jenkins
                     maven: 'MAVEN_HOME',
-                    // Specify the Maven settings.xml file if needed
-                    mavenSettingsConfig: 'your-settings-config'
+                   
                 ) {
                     sh "mvn clean install package -DskipTests -Dmaven.javadoc.skip=true"
                 }
@@ -20,7 +19,7 @@ pipeline {
                 withSonarQubeEnv('SonarServer') {
                     withMaven(
                         maven: 'MAVEN_HOME',
-                        mavenSettingsConfig: 'your-settings-config'
+                       
                     ) {
                         sh "mvn sonar:sonar"
                     }
